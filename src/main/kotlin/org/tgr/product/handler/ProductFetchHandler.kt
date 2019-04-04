@@ -33,7 +33,7 @@ class ProductFetchHandler : Handler {
             val httpClient = ctx.get(HttpClient::class.java)
             httpClient.get(URI("http://redsky.target.com/v2/pdp/tcin/$id?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics"))
                 .then { response -> response
-                    val productInfo = ObjectMapper().readValue<Map<String, Any>>(product.name, object : TypeReference<Map<String, Any>>() {})
+                    val productInfo = ObjectMapper().readValue<Map<String, Any>>(response.body.text, object : TypeReference<Map<String, Any>>() {})
                     product.name = ((((productInfo["product"] as Map<String, Any>)["item"] as Map<String, Any>)["product_description"] as Map<String, Any>)["title"]).toString()
                     ctx.render(Jackson.json(product))
                 }

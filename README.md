@@ -5,7 +5,7 @@
 - `./cassandra`
 
 ## Loading Cassandra with product data
-`cqlsh --file etc/cassandra-init.cql`
+`gradle initCassandra`
 
 ## Run Application
 - `gradle run`

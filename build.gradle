@@ -1,7 +1,8 @@
 buildscript {
     ext.versions = [
         kotlin: "1.3.21",
-        ratpack: "1.6.0"
+        ratpack: "1.6.0",
+        spek: "2.0.1"
     ]
     ext.kotlin_version = "1.3.21"
     ext.jvmTarget = "1.8"
@@ -15,16 +16,19 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "io.ratpack:ratpack-gradle:${versions.ratpack}"
         classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0"
     }
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: "io.ratpack.ratpack-java"
 apply plugin: "kotlin"
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 repositories {
     mavenCentral()
     jcenter()
+    maven { url "http://dl.bintray.com/jetbrains/spek" }
 }
 
 dependencies {
@@ -33,6 +37,10 @@ dependencies {
     compile "com.datastax.oss:java-driver-core:4.0.0"
     compile "io.ratpack:ratpack-guice:${versions.ratpack}"
     compile "org.slf4j:slf4j-simple:1.7.25"
+
+    testCompile "org.jetbrains.spek:spek-api:1.1.5"
+    testRuntime "org.jetbrains.spek:spek-junit-platform-engine:1.1.5"
+    compile("com.natpryce:hamkrest:1.7.0.0")
 }
 
 compileKotlin {
@@ -43,4 +51,19 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "$jvmTarget"
 }
 
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
+    }
+}
+
+task initCassandra(type: Exec) {
+    println "Initializing cassandra"
+    commandLine "cqlsh", "--file", "etc/cassandra-init.cql"
+}
+
 mainClassName = "org.tgr.product.Application"
+
+test.dependsOn("initCassandra")
