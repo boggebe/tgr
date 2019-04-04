@@ -15,7 +15,7 @@ _Requires cqlsh which should've been installed with cassandra_
 `curl "http://localhost:5050/api/products/17098823"`
 
 ## Set product price
-`curl -X PUT -d "2.99" "http://localhost:5050/api/products/12345/price"`
+`curl -H 'Content-Type: application/json' -X PUT -d "{\"value\":2.99, \"currency\":\"USD\"}" "http://localhost:5050/api/products/12345"`
 
 ## TODOs
 - understand better how to enforce non-null values so don't need elvis

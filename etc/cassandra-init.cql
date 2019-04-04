@@ -6,29 +6,36 @@ create keyspace if not exists tgr with replication={
 create table if not exists tgr.product_price(
     id bigint,
     price float,
+    currency ascii,
     primary key (id)
 );
 
 insert into tgr.product_price (
     id,
-    price
+    price,
+    currency
 ) values (
     13860428,
-    19.98
+    19.98,
+    'USD'
 );
 
 insert into tgr.product_price (
     id,
-    price
+    price,
+    currency
 ) values (
     75878624,
-    2.49
+    2.49,
+    'USD'
 );
 
 insert into tgr.product_price (
     id,
-    price
+    price,
+    currency
 ) values (
     17098823,
-    165.99
+    165.99,
+    'USD'
 );

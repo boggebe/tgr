@@ -6,5 +6,9 @@ package org.tgr.product.model
 class Product(val id: String) {
 
     var name: String? = null
-    var price: Float? = null
+    var price: Price? = null
+
+    class Price(var value: Float?, var currency: String?) {
+        constructor(): this(null, null)
+    }
 }

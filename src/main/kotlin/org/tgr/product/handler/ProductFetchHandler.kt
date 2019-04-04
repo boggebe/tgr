@@ -23,7 +23,7 @@ class ProductFetchHandler : Handler {
         }
 
         val priceService = ctx.get(PriceService::class.java)
-        priceService.getPriceForProduct(id).then { price ->
+        priceService.getPriceForProduct(id).then { price: Product.Price? ->
             product.price = price
         }
 

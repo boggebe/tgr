@@ -33,8 +33,12 @@ class Application {
                 .all(RequestLoggingHandler::class.java)
                 .prefix("api") { api -> api
                     .prefix("products") { products -> products
-                        .get(":id", ProductFetchHandler::class.java)
-                        .put(":id/price", ProductPriceUpdateHandler::class.java)
+                        .path(":id") { ctx -> ctx
+                            .byMethod { ctx -> ctx
+                                .get(ProductFetchHandler::class.java)
+                                .put(ProductPriceUpdateHandler::class.java)
+                            }
+                        }
                         .all { ctx -> ctx
                             .render("listing products")
                         }
