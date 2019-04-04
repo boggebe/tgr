@@ -8,7 +8,7 @@ class RequestLoggingHandler : Handler {
     private val log = LoggerFactory.getLogger(RequestLoggingHandler::class.java)
 
     override fun handle(ctx: Context) {
-        log.info("handling request: ${ctx.request.path}?${ctx.request.query}")
+        log.info("handling request: ${ctx.request.method} ${ctx.request.path}?${ctx.request.query}")
         ctx.next()
     }
 }

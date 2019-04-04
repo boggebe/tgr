@@ -1,11 +1,14 @@
 package org.tgr.product.service
 
 import com.datastax.oss.driver.api.core.CqlSession
+import com.google.inject.Inject
+import com.typesafe.config.Config
 import org.slf4j.LoggerFactory
 import ratpack.exec.Blocking
 import ratpack.exec.Promise
 
-class PriceServiceImpl : PriceService {
+class PriceServiceImpl @Inject constructor(val conf: Config) : PriceService {
+
     private val log = LoggerFactory.getLogger(PriceServiceImpl::class.java)
 
     private var session: CqlSession
@@ -13,7 +16,7 @@ class PriceServiceImpl : PriceService {
     init {
         log.info("initializing cassandra session")
         session = CqlSession.builder()
-            .withKeyspace("tgr")
+            .withKeyspace(conf.getConfig("tgr").getConfig("cassandra").getString("keyspace"))
             .build()
     }
 

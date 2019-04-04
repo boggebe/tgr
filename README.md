@@ -22,3 +22,5 @@ _Requires cqlsh which should've been installed with cassandra_
 - better handling of configuration
 - configure and use external cassandra
 - make put json?
+- hook up to CI
+- etc
