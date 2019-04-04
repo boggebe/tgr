@@ -4,13 +4,13 @@ create keyspace if not exists tgr with replication={
 };
 
 create table if not exists tgr.product_price(
-    partNumber bigint,
+    id bigint,
     price float,
-    primary key (partNumber)
+    primary key (id)
 );
 
 insert into tgr.product_price (
-    partNumber,
+    id,
     price
 ) values (
     13860428,
@@ -18,7 +18,7 @@ insert into tgr.product_price (
 );
 
 insert into tgr.product_price (
-    partNumber,
+    id,
     price
 ) values (
     75878624,
@@ -26,7 +26,7 @@ insert into tgr.product_price (
 );
 
 insert into tgr.product_price (
-    partNumber,
+    id,
     price
 ) values (
     17098823,

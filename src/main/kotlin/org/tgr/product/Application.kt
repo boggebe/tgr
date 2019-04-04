@@ -3,6 +3,8 @@ package org.tgr.product
 import org.slf4j.LoggerFactory
 import org.tgr.product.app.ApplicationModule
 import org.tgr.product.handler.ProductFetchHandler
+import org.tgr.product.handler.ProductPriceUpdateHandler
+import org.tgr.product.handler.RequestLoggingHandler
 import ratpack.guice.Guice
 import ratpack.server.RatpackServer
 
@@ -28,9 +30,11 @@ class Application {
             })
 
             .handlers { chain -> chain
+                .all(RequestLoggingHandler::class.java)
                 .prefix("api") { api -> api
                     .prefix("products") { products -> products
                         .get(":id", ProductFetchHandler::class.java)
+                        .put(":id/price", ProductPriceUpdateHandler::class.java)
                         .all { ctx -> ctx
                             .render("listing products")
                         }
